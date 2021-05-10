@@ -1,36 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import TodoList from './TodoList';
 import './App.scss';
 
 function App() {
-  const [domWriting, setDomWriting] = useState('Nothing Here!');
+  const [todos, setTodos] = useState([]);
+  const todoNameRef = useRef();
 
-  const handleClick = (e) => {
-    console.warn(`You clicked ${e.target.id}`);
-    setDomWriting(`You clicked ${e.target.id}! Check the Console!`);
-  };
+  function handleAddTodo(e) {
+    const name = todoNameRef.current.value;
+    if (name === '') return;
+    console.log(name);
+  }
 
   return (
     <div className='App'>
-      <h2>INSIDE APP COMPONENT</h2>
-      <div>
-        <button
-          id='this-button'
-          className='btn btn-info'
-          onClick={handleClick}
-        >
-          I am THIS button
-        </button>
-      </div>
-      <div>
-        <button
-          id='that-button'
-          className='btn btn-primary mt-3'
-          onClick={handleClick}
-        >
-          I am THAT button
-        </button>
-      </div>
-      <h3>{domWriting}</h3>
+      <TodoList todos={todos}/>
+      <input ref={todoNameRef} type="text" />
+      <button onClick={handleAddTodo}>Add</button>
+      <button>Clear</button>
+      <div>0 left</div>
     </div>
   );
 }
